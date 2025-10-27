@@ -1,8 +1,10 @@
 package com.saurav.journalApp.controller;
 
+import com.saurav.journalApp.api.response.WeatherResponse;
 import com.saurav.journalApp.entity.User;
 import com.saurav.journalApp.repository.UserRepository;
 import com.saurav.journalApp.service.UserService;
+import com.saurav.journalApp.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,20 +22,13 @@ public class UserController {
 
     @Autowired
     private UserRepository userSRepository;
+
     @Autowired
     private UserRepository userRepository;
 
-//    Not imp
-//    @GetMapping("/{userName}")
-//    public ResponseEntity<User> getUser(@PathVariable String userName) {
-//        User user = userService.findByUserName(userName);
-//        if (user != null) {
-//            return new ResponseEntity<>(user.get(), HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-    //
+    @Autowired
+    private WeatherService weatherService;
+
 
     @PutMapping()
     public ResponseEntity<?> updateUser(@RequestBody User user) {
@@ -49,21 +44,6 @@ public class UserController {
     }
 
 
-//
-//    @DeleteMapping()
-//    public ResponseEntity<?> deleteUserById() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String username = authentication.getName();
-//
-//        User user = userRepository.findByUserName(username);
-//        if (user == null) {
-//            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-//        }
-//
-//        userRepository.delete(user);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
-
 
     @DeleteMapping
     public ResponseEntity<?> deleteUser() {
@@ -72,12 +52,18 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping
+    public ResponseEntity<?> greeting() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WeatherResponse weatherResponse = weatherService.getWeather("Ahmedabad");
+        String greeting = "";
+        if  (weatherResponse != null) {
+          greeting =", Weathers feels like " + weatherResponse.getCurrent().getFeelslike();
+        }
+        return new ResponseEntity<>("Hi " + authentication.getName() + greeting, HttpStatus.OK);
 
-//
-//    @GetMapping("/test")
-//    public ResponseEntity<String> testEndpoint() {
-//        return ResponseEntity.ok("UserController is active!");
-//    }
+    }
+
 
 
 }

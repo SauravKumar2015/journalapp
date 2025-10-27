@@ -3,6 +3,7 @@ package com.saurav.journalApp.controller;
 
 import com.saurav.journalApp.entity.JournalEntry;
 import com.saurav.journalApp.entity.User;
+import com.saurav.journalApp.enums.Sentiment;
 import com.saurav.journalApp.service.JournalEntryService;
 import com.saurav.journalApp.service.UserService;
 import org.bson.types.ObjectId;
@@ -42,7 +43,7 @@ public class JournalEntryController {
     }
 
     @PostMapping()
-    public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry myEntry) {    
+    public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry myEntry) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userName = authentication.getName();

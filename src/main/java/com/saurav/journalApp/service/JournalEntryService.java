@@ -2,18 +2,19 @@ package com.saurav.journalApp.service;
 
 import com.saurav.journalApp.entity.JournalEntry;
 import com.saurav.journalApp.entity.User;
+import com.saurav.journalApp.enums.Sentiment;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.saurav.journalApp.repository.JournalEntryRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 @Slf4j
 public class JournalEntryService {
 
@@ -41,7 +42,6 @@ public class JournalEntryService {
 
     public void saveEntry(JournalEntry journalEntry) {
         journalEntryRepository.save(journalEntry);
-
 
     }
 

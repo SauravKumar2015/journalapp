@@ -1,6 +1,8 @@
     package com.saurav.journalApp.entity;
 
     import java.time.LocalDateTime;
+
+    import com.saurav.journalApp.enums.Sentiment;
     import lombok.Data;
     import lombok.NoArgsConstructor;
     import lombok.NonNull;
@@ -19,4 +21,5 @@
         private String title;
         private String content;
         private LocalDateTime date;
+        private Sentiment sentiment;
     }
