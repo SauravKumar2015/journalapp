@@ -147,15 +147,46 @@ application.properties or application.yml
 
 ## API Endpoints
 
-| Endpoint                | Method | Description                        |
-| ----------------------- | ------ | ---------------------------------- |
-| `/public/login`         | POST   | User login, returns JWT token      |
-| `/public/signup`        | POST   | User registration                  |
-| `/journal/entries`      | GET    | Fetch all journal entries          |
-| `/journal/entries`      | POST   | Add a new journal entry            |
-| `/journal/entries/{id}` | PUT    | Update a journal entry             |
-| `/journal/entries/{id}` | DELETE | Delete a journal entry             |
-| `/weather`              | GET    | Get weather information for a city |
+Admin:
+
+| Endpoint               | Method | Description           |
+| ---------------------- | ------ | --------------------- |
+| `/admin/get-all-users` | GET    | Fetch all admin users |
+| `/admin/add`           | GET    | Add a new admin       |
+
+Journal:
+
+| Endpoint                | Method | Description                  |
+| ----------------------- | ------ | ---------------------------- |
+| `/journal/journal`      | GET    | Get all journal entries      |
+| `/journal/add`          | GET    | Add a new journal entry      |
+| `/journal/get-by-id`    | GET    | Get a journal entry by ID    |
+| `/journal/delete-by-id` | GET    | Delete a journal entry by ID |
+| `/journal/update-by-id` | GET    | Update a journal entry by ID |
+
+Public:
+
+| Endpoint                | Method | Description              |
+| ----------------------- | ------ | ------------------------ |
+| `/public/health`        | GET    | Health check             |
+| `/public/Sign-Up`       | GET    | User registration        |
+| `/public/imported-curl` | POST   | Import data via cURL     |
+| `/public/login`         | GET    | User login (returns JWT) |
+
+User:
+
+| Endpoint            | Method | Description                 |
+| ------------------- | ------ | --------------------------- |
+| `/user/delete-user` | GET    | Delete a user               |
+| `/user/update-user` | GET    | Update user information     |
+| `/user/greetings`   | GET    | Test endpoint for greetings |
+
+Weather:
+
+| Endpoint        | Method | Description                          |
+| --------------- | ------ | ------------------------------------ |
+| `/weather/city` | GET    | Fetch weather information for a city |
+
 
 ## Testing
 - Run all unit and integration tests with:
