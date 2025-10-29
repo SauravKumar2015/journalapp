@@ -18,10 +18,14 @@ import org.springframework.web.client.RestTemplate;
 public class JournalAppApplication {
 
 	public static void main(String[] args) {
-
 		ConfigurableApplicationContext context = SpringApplication.run(JournalAppApplication.class, args);
 		ConfigurableEnvironment environment = context.getEnvironment();
-		System.out.println(environment.getActiveProfiles()[0]);
+		String[] profiles = environment.getActiveProfiles();
+		if (profiles.length > 0) {
+			System.out.println(profiles[0]);
+		} else {
+			System.out.println("No active profile set");
+		}
 	}
 
 	@Bean
@@ -33,7 +37,6 @@ public class JournalAppApplication {
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
-
 }
 
 // PlatformTransactionManager
