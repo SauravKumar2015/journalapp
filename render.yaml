@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: journal-app
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: MONGO_URI
+        sync: false
+      - key: REDIS_HOST
+        sync: false
+      - key: REDIS_PORT
+        sync: false
+      - key: REDIS_PASSWORD
+        sync: false
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: KAFKA_BOOTSTRAP
+        sync: false
+      - key: KAFKA_KEY
+        sync: false
+      - key: KAFKA_SECRET
+        sync: false
+      - key: WEATHER_API_KEY
+        sync: false

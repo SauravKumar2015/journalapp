@@ -1,11 +1,10 @@
-
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+# Spring / STS
 .apt_generated
 .classpath
 .factorypath
@@ -14,23 +13,26 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
+# IntelliJ IDEA
 .idea
 *.iws
 *.iml
 *.ipr
-*.yml
+# Removed "*.yml" because we need YAML files
+
+# Logs
 *.log
 /htmlReport
-### NetBeans ###
+
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
+/nb-gradle/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
+# VS Code
 .vscode/
