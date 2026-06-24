@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +36,7 @@ public class PublicController {
         return "Health is good";
     }
 
-    @PostMapping("/Sign-Up")
+    @PostMapping("/signup")
     private void signup(@RequestBody User user) {
         userService.saveNewUser(user);
     }

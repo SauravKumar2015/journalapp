@@ -1,35 +1,38 @@
 package com.saurav.journalApp.entity;
 
-import lombok.*;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Document(collection = "users")
+@Entity
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "user_name"))
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
 
     @Id
-    private ObjectId id;
-    @Indexed(unique = true)
-    @NonNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
 
     private String email;
     private boolean sentimentAnalysis;
-
-    @NonNull
     private String password;
 
-    @DBRef
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<JournalEntry> journalEntries = new ArrayList<>();
-    private List<String> roles;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    private List<String> roles = new ArrayList<>();
 }

@@ -1,19 +1,22 @@
-    package com.saurav.journalApp.entity;
+package com.saurav.journalApp.entity;
 
-    import lombok.Data;
-    import lombok.NoArgsConstructor;
-    import lombok.NonNull;
-    import org.bson.types.ObjectId;
-    import org.springframework.data.annotation.Id;
-    import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-    @Document(collection = "config_journal_app")
-    @Data
-    @NoArgsConstructor
-    public class ConfigJournalAppEntity {
+@Entity
+@Table(name = "config_journal_app")
+@Data
+@NoArgsConstructor
+public class ConfigJournalAppEntity {
 
-        private String key;
-        private String value;
-    }
+    @Id
+    @Column(name = "config_key", nullable = false, unique = true)
+    private String key;
+
+    private String value;
+}

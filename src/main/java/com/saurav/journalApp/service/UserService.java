@@ -3,7 +3,6 @@ package com.saurav.journalApp.service;
 import com.saurav.journalApp.entity.User;
 import com.saurav.journalApp.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,11 +53,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(ObjectId id) {
+    public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
-    public void deleteById(ObjectId id) {
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 
@@ -69,5 +68,3 @@ public class UserService {
 
 
 }
-
-// controller ---> service ----> repository

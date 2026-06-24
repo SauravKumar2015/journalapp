@@ -1,14 +1,64 @@
 spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/journaldb
-      database: journaldb
+  datasource:
+    url: jdbc:postgresql://localhost:5432/journaldb
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
   redis:
-    host: localhost
-    port: 6379
-    password: ""
-    ssl: false
+    host: redis-12224.crce182.ap-south-1-1.ec2.redns.redis-cloud.com
+    port: 12224
+    password: LGEuzUjhPPJaDdWPNoNOLYC1zwsXdmwg
+    ssl: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sauravkumar973532@gmail.com
+    password: "wyrg ytop jryn jwfe"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  kafka:
+    bootstrap-servers: pkc-9q8rv.ap-south-2.aws.confluent.cloud:9092
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+    consumer:
+      group-id: weekly-sentiment-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.saurav.journalApp.model
+        spring.json.value.default.type: com.saurav.journalApp.model.SentimentData
+
+    properties:
+      security.protocol: SASL_SSL
+      sasl.mechanism: PLAIN
+      sasl.jaas.config: >
+        org.apache.kafka.common.security.plain.PlainLoginModule required
+        username='Y6CLH4A56QY5URTS'
+        password='cfltO8jkUdMqvn4L9Uwl8ql5fnKEBeTJpnv5a7GnE0gUuQuyBD3vdMtnVb4xaU4w';
 
 server:
   port: 8080
+  servlet:
+    context-path: /journal
+
+app:
+  mail:
+    to: sauravmehta973532@gmail.com
+
+weather:
+  api:
+    key: 94382977234c0f4a2642de58322f0be9

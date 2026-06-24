@@ -1,16 +1,12 @@
 package com.saurav.journalApp.repository;
 
-
-import com.saurav.journalApp.entity.JournalEntry;
 import com.saurav.journalApp.entity.User;
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
+public interface UserRepository extends JpaRepository<User, Long> {
 
-public interface UserRepository extends MongoRepository<User, ObjectId> {
+    User findByUserName(String userName);
 
-     User findByUserName(String userName);
-
-     void deleteByUserName(String userName);
+    void deleteByUserName(String userName);
 
 }

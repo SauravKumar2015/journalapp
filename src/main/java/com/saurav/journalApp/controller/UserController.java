@@ -20,8 +20,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    private UserRepository userSRepository;
+    // @Autowired
+    // private UserRepository userSRepository;
 
     @Autowired
     private UserRepository userRepository;

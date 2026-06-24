@@ -1,12 +1,8 @@
 package com.saurav.journalApp.repository;
 
-
 import com.saurav.journalApp.entity.ConfigJournalAppEntity;
-import com.saurav.journalApp.entity.JournalEntry;
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-
-public interface ConfigJournalAppRepository extends MongoRepository<ConfigJournalAppEntity, ObjectId> {
+public interface ConfigJournalAppRepository extends JpaRepository<ConfigJournalAppEntity, String> {
 
 }

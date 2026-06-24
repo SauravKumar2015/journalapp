@@ -3,10 +3,8 @@ package com.saurav.journalApp.controller;
 
 import com.saurav.journalApp.entity.JournalEntry;
 import com.saurav.journalApp.entity.User;
-import com.saurav.journalApp.enums.Sentiment;
 import com.saurav.journalApp.service.JournalEntryService;
 import com.saurav.journalApp.service.UserService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +53,7 @@ public class JournalEntryController {
     }
 
     @GetMapping("id/{myId}")
-    public ResponseEntity<?> getJournalEntryById(@PathVariable ObjectId myId) {
+    public ResponseEntity<?> getJournalEntryById(@PathVariable Long myId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userService.findByUserName(userName);
@@ -71,7 +69,7 @@ public class JournalEntryController {
     }
 
     @DeleteMapping("id/{myId}")
-    public ResponseEntity<?> deleleJournalEntryById(@PathVariable ObjectId myId) {
+    public ResponseEntity<?> deleleJournalEntryById(@PathVariable Long myId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         boolean removed = journalEntryService.deleteById(myId, userName);
@@ -84,7 +82,7 @@ public class JournalEntryController {
 
     @PutMapping("/id/{myId}")
     public ResponseEntity<?> updateJournalEntry(
-            @PathVariable ObjectId  myId,
+            @PathVariable Long myId,
             @RequestBody JournalEntry newEntry) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -26,11 +26,16 @@ public class JwtFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain chain)
             throws ServletException, IOException {
 
-        String path = request.getRequestURI();
-        if (path.startsWith("/journal/public")) {
+        // 🔥 Use servlet path (correct with context-path)
+        String path = request.getServletPath();
+
+        // ✅ Allow public endpoints without JWT
+        if (path.startsWith("/public")) {
             chain.doFilter(request, response);
             return;
         }
@@ -39,22 +44,47 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = null;
         String jwt = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        // ✅ Extract JWT
+        if (authorizationHeader != null &&
+                authorizationHeader.startsWith("Bearer ")) {
+
             jwt = authorizationHeader.substring(7);
             username = jwtUtil.extractUsername(jwt);
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        // ❌ No token for secured endpoints
+        if (authorizationHeader == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        // ✅ Authenticate user
+        if (username != null &&
+                SecurityContextHolder.getContext().getAuthentication() == null) {
+
+            UserDetails userDetails =
+                    userDetailsService.loadUserByUsername(username);
+
             if (jwtUtil.validateToken(jwt)) {
-                UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(auth);
+
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities()
+                        );
+
+                authentication.setDetails(
+                        new WebAuthenticationDetailsSource()
+                                .buildDetails(request)
+                );
+
+                // 🔥 CRITICAL LINE
+                SecurityContextHolder.getContext()
+                        .setAuthentication(authentication);
             }
         }
 
         chain.doFilter(request, response);
     }
-
 }

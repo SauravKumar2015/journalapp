@@ -13,21 +13,26 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    private String SECRET_KEY = "TaK+HaV^uvCHEFsEVfypW#7g9^k*Z8$V";
+    // 🔐 256-bit secret key (DO NOT shorten this)
+    private static final String SECRET_KEY =
+            "TaK+HaV^uvCHEFsEVfypW#7g9^k*Z8$VTaK+HaV^uvCHEFsEVfypW";
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
+    // ✅ Extract username
     public String extractUsername(String token) {
         Claims claims = extractAllClaims(token);
         return claims.getSubject();
     }
 
+    // ✅ Extract expiration
     public Date extractExpiration(String token) {
         return extractAllClaims(token).getExpiration();
     }
 
+    // ✅ Parse & verify token (signature verified here)
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .verifyWith(getSigningKey())
@@ -36,10 +41,12 @@ public class JwtUtil {
                 .getPayload();
     }
 
-    private Boolean isTokenExpired(String token) {
+    // ✅ Expiry check
+    private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
+    // ✅ Token generation (same as yours)
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, username);
@@ -49,16 +56,23 @@ public class JwtUtil {
         return Jwts.builder()
                 .claims(claims)
                 .subject(subject)
-                .header().empty().add("typ","JWT")
+                .header().empty().add("typ", "JWT")
                 .and()
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 5 minutes expiration time
+                .expiration(
+                        new Date(System.currentTimeMillis() + 1000 * 60 * 60)
+                ) // 1 hour
                 .signWith(getSigningKey())
                 .compact();
     }
 
-    public Boolean validateToken(String token) {
-        return !isTokenExpired(token);
+    // ✅ FULL validation (signature + expiry)
+    public boolean validateToken(String token) {
+        try {
+            extractAllClaims(token); // verifies signature
+            return !isTokenExpired(token);
+        } catch (Exception e) {
+            return false;
+        }
     }
-
 }

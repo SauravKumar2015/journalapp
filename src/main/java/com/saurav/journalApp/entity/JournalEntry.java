@@ -1,25 +1,34 @@
-    package com.saurav.journalApp.entity;
+package com.saurav.journalApp.entity;
 
-    import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.saurav.journalApp.enums.Sentiment;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
-    import com.saurav.journalApp.enums.Sentiment;
-    import lombok.Data;
-    import lombok.NoArgsConstructor;
-    import lombok.NonNull;
-    import org.bson.types.ObjectId;
-    import org.springframework.data.annotation.Id;
-    import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
-    @Document(collection = "journal_entries")
-    @Data
-    @NoArgsConstructor
-    public class JournalEntry {
+@Entity
+@Table(name = "journal_entries")
+@Data
+@NoArgsConstructor
+public class JournalEntry {
 
-        @Id
-        private ObjectId id;
-        @NonNull
-        private String title;
-        private String content;
-        private LocalDateTime date;
-        private Sentiment sentiment;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NonNull
+    @Column(nullable = false)
+    private String title;
+
+    private String content;
+    private LocalDateTime date;
+    private Sentiment sentiment;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
+}

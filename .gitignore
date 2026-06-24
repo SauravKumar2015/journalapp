@@ -23,6 +23,7 @@ target/
 # Logs
 *.log
 /htmlReport
+/JPA_Hibernate_Migration_Notes.md
 
 # NetBeans
 /nbproject/private/
