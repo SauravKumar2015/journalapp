@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder; // Use standard interface
 import org.springframework.stereotype.Service;
+import com.saurav.journalApp.DTO.UserRequestDTO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,22 +36,24 @@ public class UserService {
     }
 
     // FIX 2: Create a dedicated method for updating an existing user safely
-    public User updateUser(String authenticatedUsername, User userDetails) {
-        // Fetch user currently logged in
+    public User updateUser(String authenticatedUsername, UserRequestDTO dto) {
         User existingUser = userRepository.findByUserName(authenticatedUsername);
-        
-        if (existingUser != null) {
-            // Update username string
-            existingUser.setUserName(userDetails.getUserName());
-            
-            // Encrypt the incoming new raw password string before saving
-            if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
-                existingUser.setPassword(passwordEncoder.encode(userDetails.getPassword()));
-            }
-            
-            return userRepository.save(existingUser);
+        if (existingUser == null) throw new RuntimeException("User not found: " + authenticatedUsername);
+
+        if (dto.getUserName() != null && !dto.getUserName().isEmpty()) {
+            existingUser.setUserName(dto.getUserName());
         }
-        throw new RuntimeException("User not found: " + authenticatedUsername);
+        if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
+            existingUser.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
+        if (dto.getEmail() != null && !dto.getEmail().isEmpty()) {
+            existingUser.setEmail(dto.getEmail());
+        }
+        if (dto.getSentimentAnalysis() != null) {
+            existingUser.setSentimentAnalysis(dto.getSentimentAnalysis());
+        }
+
+        return userRepository.save(existingUser);
     }
 
     public void saveAdmin(User user) {

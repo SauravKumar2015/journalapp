@@ -73,22 +73,16 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
-
-    // ✅ CORS configuration to allow only your frontend HTML
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-
-        // Only allow your HTML origin
         config.setAllowedOrigins(List.of("http://localhost:5500"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/journal/**", config); // only journal API exposed
-
+        source.registerCorsConfiguration("/**", config); // ✅ cover ALL endpoints
         return source;
     }
 }

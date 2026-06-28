@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.saurav.journalApp.enums.Sentiment;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ public class User {
     private String userName;
 
     private String email;
-    private boolean sentimentAnalysis;
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -39,4 +39,8 @@ public class User {
     @Column(name = "role")
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     private List<String> roles = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sentiment_analysis")
+    private Sentiment sentimentAnalysis;  // nullable — optional during signup
 }
