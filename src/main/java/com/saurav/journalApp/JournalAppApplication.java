@@ -18,11 +18,11 @@ public class JournalAppApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(JournalAppApplication.class, args);
 		ConfigurableEnvironment environment = context.getEnvironment();
 		String[] profiles = environment.getActiveProfiles();
-		if (profiles.length > 0) {
-			System.out.println(profiles[0]);
-		} else {
-			System.out.println("Application Start");
-		}
+		String activeProfile = profiles.length > 0 ? profiles[0] : "default";
+		String port = environment.getProperty("local.server.port", environment.getProperty("server.port", "unknown"));
+		System.out.println("==============================================================================================");
+		System.out.println("APPLICATION HAS STARTED SUCCESSFULLY ON PORT ='" + activeProfile + "' port='" + port + "'");
+		System.out.println("==============================================================================================");
 	}
 
 	@Bean

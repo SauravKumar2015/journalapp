@@ -41,6 +41,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ✅ allow preflight
                 .antMatchers("/public/**").permitAll()   // open endpoints
+                .antMatchers("/admin/create-admin-user").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/journal/**").authenticated()

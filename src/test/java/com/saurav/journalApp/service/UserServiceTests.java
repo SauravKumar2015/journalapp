@@ -22,7 +22,7 @@ public class UserServiceTests {
 
 //    @Disabled
     @Test
-    private void testFindByUsername() {             // Tested
+    public void testFindByUsername() {             // Tested
         User user = userRepository.findByUserName("saurav");
         assertTrue(!user.getJournalEntries().isEmpty());
     }
@@ -35,7 +35,7 @@ public class UserServiceTests {
             "1,1, 2"
     })
 
-    private void test(int a, int b, int expected) {    // Tested
+    public void test(int a, int b, int expected) {    // Tested
         assertEquals(expected, a + b);
     }
 
@@ -45,7 +45,7 @@ public class UserServiceTests {
             "saurav",
             "Hemant"
     })
-    private void  nameTest(String name) {      // Tested
+    public void  nameTest(String name) {      // Tested
         assertNotNull(userRepository.findByUserName(name));
     }
 

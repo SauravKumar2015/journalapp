@@ -37,18 +37,24 @@ public class PublicController {
     }
 
     @PostMapping("/signup")
-    private void signup(@RequestBody User user) {
+    public ResponseEntity<String> signup(@RequestBody User user) {
+        try {
         userService.saveNewUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+        } catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Registration failed");
+        } 
     }
 
     @PostMapping("/login")
-    private ResponseEntity<String> login(@RequestBody User user) {
+    public ResponseEntity<String> login(@RequestBody User user) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
             UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUserName());
             String jwt = jwtUtil.generateToken(userDetails.getUsername());
-            return new ResponseEntity(jwt, HttpStatus.OK);
+            return new ResponseEntity<String>(jwt, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Exception occured while createAuthenticationToken");
             return new ResponseEntity<>("Incorrect userName and password", HttpStatus.BAD_REQUEST);

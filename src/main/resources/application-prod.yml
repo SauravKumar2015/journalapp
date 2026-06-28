@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/journaldb
     username: postgres
-    password: postgres
+    password: 123
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -51,7 +51,7 @@ spring:
         password='cfltO8jkUdMqvn4L9Uwl8ql5fnKEBeTJpnv5a7GnE0gUuQuyBD3vdMtnVb4xaU4w';
 
 server:
-  port: ${PORT:8080}
+  port: 8081
   servlet:
     context-path: /journal
 

@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import com.saurav.journalApp.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+// import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class UserDetailsServiceImpTests {
 
     @BeforeEach
     void SetUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test

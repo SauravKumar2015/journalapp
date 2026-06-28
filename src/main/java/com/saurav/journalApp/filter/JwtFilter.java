@@ -44,17 +44,22 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = null;
         String jwt = null;
 
-        // ✅ Extract JWT
-        if (authorizationHeader != null &&
-                authorizationHeader.startsWith("Bearer ")) {
-
-            jwt = authorizationHeader.substring(7);
-            username = jwtUtil.extractUsername(jwt);
+        // ✅ Extract JWT from Authorization header (case-insensitive Bearer)
+        if (authorizationHeader != null) {
+            String headerValue = authorizationHeader.trim();
+            if (headerValue.regionMatches(true, 0, "Bearer ", 0, 7)) {
+                jwt = headerValue.substring(7).trim();
+            } else if (!headerValue.contains(" ")) {
+                jwt = headerValue;
+            }
+            if (jwt != null && !jwt.isBlank()) {
+                username = jwtUtil.extractUsername(jwt);
+            }
         }
 
-        // ❌ No token for secured endpoints
-        if (authorizationHeader == null) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        // ✅ Only try JWT authentication when a valid token is present
+        if (jwt == null || jwt.isBlank()) {
+            chain.doFilter(request, response);
             return;
         }
 

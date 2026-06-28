@@ -12,7 +12,7 @@ public class RedisTest {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
-    @Disabled
+    // @Disabled
     @Test
     void testRedis() {
         redisTemplate.opsForValue().set("email", "saurav@gmail.com");

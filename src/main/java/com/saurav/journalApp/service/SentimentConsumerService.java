@@ -4,8 +4,10 @@ import com.saurav.journalApp.model.SentimentData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Profile;
 
 @Service
+@Profile("!dev")
 public class SentimentConsumerService {
 
     @Autowired

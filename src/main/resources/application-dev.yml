@@ -29,26 +29,25 @@ spring:
 
   kafka:
     bootstrap-servers: pkc-9q8rv.ap-south-2.aws.confluent.cloud:9092
-
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
     consumer:
       group-id: weekly-sentiment-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: com.saurav.journalApp.model
-        spring.json.value.default.type: com.saurav.journalApp.model.SentimentData
-
+        "spring.json.trusted.packages": "com.saurav.journalApp.model"
+        "spring.json.value.default.type": "com.saurav.journalApp.model.SentimentData"
     properties:
       security.protocol: SASL_SSL
       sasl.mechanism: PLAIN
-      sasl.jaas.config: >
+      sasl.jaas.config: |
         org.apache.kafka.common.security.plain.PlainLoginModule required
         username='Y6CLH4A56QY5URTS'
         password='cfltO8jkUdMqvn4L9Uwl8ql5fnKEBeTJpnv5a7GnE0gUuQuyBD3vdMtnVb4xaU4w';
+    listener:
+      auto-startup: false
 
 server:
   port: 8080
@@ -61,4 +60,5 @@ app:
 
 weather:
   api:
-    key: 94382977234c0f4a2642de58322f0be9
+    key: 9b3fee9e8e0fb2e5fd94d4fb178b647e
+    url: "http://api.weatherstack.com/current?access_key=<apiKey>&query=<city>"
