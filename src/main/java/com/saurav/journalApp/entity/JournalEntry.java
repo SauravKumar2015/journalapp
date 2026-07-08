@@ -25,6 +25,8 @@ public class JournalEntry {
 
     private String content;
     private LocalDateTime date;
+    
+    @Enumerated(EnumType.STRING) 
     private Sentiment sentiment;
 
     @ManyToOne(fetch = FetchType.LAZY)

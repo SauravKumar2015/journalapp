@@ -2,7 +2,6 @@ package com.saurav.journalApp.service;
 
 import com.saurav.journalApp.entity.JournalEntry;
 import com.saurav.journalApp.entity.User;
-import com.saurav.journalApp.enums.Sentiment;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.saurav.journalApp.repository.JournalEntryRepository;

@@ -21,7 +21,7 @@ public class JournalAppApplication {
 		String activeProfile = profiles.length > 0 ? profiles[0] : "default";
 		String port = environment.getProperty("local.server.port", environment.getProperty("server.port", "unknown"));
 		System.out.println("==============================================================================================");
-		System.out.println("APPLICATION HAS STARTED SUCCESSFULLY ON PORT ='" + activeProfile + "' port='" + port + "'");
+		System.out.println("APPLICATION HAS STARTED SUCCESSFULLY ON PROFILE ='" + activeProfile + "' PORT='" + port + "'");
 		System.out.println("==============================================================================================");
 	}
 

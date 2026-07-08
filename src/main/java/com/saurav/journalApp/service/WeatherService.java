@@ -43,7 +43,7 @@ public class WeatherService {
         if (finalAPI.contains("<apiKey>")) {
             finalAPI = finalAPI.replace("<apiKey>", api_key);
         } else {
-            finalAPI = finalAPI.replaceAll("(?i)(access_key=)[^&]+", "$1" + api_key);
+            System.out.println("Calling weather API: " + finalAPI.replaceAll("access_key=[^&]+", "access_key=REDACTED"));
         }
 
         ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null, WeatherResponse.class);

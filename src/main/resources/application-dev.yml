@@ -60,5 +60,5 @@ app:
 
 weather:
   api:
-    key: 9b3fee9e8e0fb2e5fd94d4fb178b647e
+    key: d4d697ba1fd58afdf01fcbe8213ba0f4
     url: "http://api.weatherstack.com/current?access_key=<apiKey>&query=<city>"

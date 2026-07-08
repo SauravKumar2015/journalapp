@@ -1,23 +1,25 @@
 package com.saurav.journalApp.api.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
 public class WeatherResponse {
 
     private Current current;
 
-
-
+    @JsonIgnoreProperties(ignoreUnknown = true)
     @Getter
     @Setter
     public static class Current {
 
         private int temperature;
+
         @JsonProperty("weather_code")
         private int weatherCode;
 
@@ -26,5 +28,4 @@ public class WeatherResponse {
 
         private int feelslike;
     }
-
 }
